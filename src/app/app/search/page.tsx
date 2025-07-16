@@ -11,6 +11,7 @@ import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { allProfiles } from '@/lib/mock-data.tsx';
 import { CheckCircle, MessageSquare, User, SearchIcon } from 'lucide-react';
+import Link from 'next/link';
 
 function ProfileCard({ profile }: { profile: (typeof allProfiles)[0] }) {
   return (
@@ -34,7 +35,11 @@ function ProfileCard({ profile }: { profile: (typeof allProfiles)[0] }) {
         <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{profile.profileDetails}</p>
       </CardContent>
       <CardFooter className="p-4 pt-0 flex gap-2">
-        <Button size="sm" className="flex-1"><User className="mr-2 h-4 w-4" /> View Profile</Button>
+        <Button size="sm" className="flex-1" asChild>
+          <Link href={`/app/profile/${profile.id}`}>
+            <User className="mr-2 h-4 w-4" /> View Profile
+          </Link>
+        </Button>
         <Button size="sm" variant="outline" className="flex-1"><MessageSquare className="mr-2 h-4 w-4" /> Connect</Button>
       </CardFooter>
     </Card>
