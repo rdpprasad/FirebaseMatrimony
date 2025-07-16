@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Bandhan Forever',
+  title: 'Sign Without Caste',
   description: 'A modern matrimony app for Indians, focusing on compatibility and connection beyond caste.',
   icons: {
     icon: "/favicon.ico",

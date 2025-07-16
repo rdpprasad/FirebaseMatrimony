@@ -62,7 +62,7 @@ function LandingFooter() {
         <div className="flex items-center space-x-2">
           <Logo />
         </div>
-        <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Bandhan Forever. All rights reserved.</p>
+        <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Sign Without Caste. All rights reserved.</p>
         <div className="flex items-center space-x-4">
             <Link href="#" className="text-sm text-muted-foreground hover:text-foreground">Privacy Policy</Link>
             <Link href="#" className="text-sm text-muted-foreground hover:text-foreground">Terms of Service</Link>
@@ -82,7 +82,7 @@ export default function Home() {
             <div className="space-y-6">
               <h1 className="font-headline text-4xl md:text-6xl font-bold tracking-tight text-primary">Find your forever, together.</h1>
               <p className="text-lg text-muted-foreground">
-                Welcome to Bandhan Forever, a modern platform for the Indian community to discover genuine connections. We believe in love and compatibility, beyond boundaries.
+                Welcome to Sign Without Caste, a modern platform for the Indian community to discover genuine connections. We believe in love and compatibility, beyond boundaries.
               </p>
               <div className="flex gap-4">
                 <Button size="lg" asChild>
@@ -166,7 +166,7 @@ export default function Home() {
         <section id="success-stories" className="py-20 bg-secondary">
           <div className="container">
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="font-headline text-3xl md:text-4xl font-bold">Love Found on Bandhan Forever</h2>
+              <h2 className="font-headline text-3xl md:text-4xl font-bold">Love Found on Sign Without Caste</h2>
               <p className="mt-4 text-lg text-muted-foreground">Don't just take our word for it. Read stories from couples who found their forever love with us.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
