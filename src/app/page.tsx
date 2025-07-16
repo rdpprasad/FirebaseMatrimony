@@ -11,9 +11,9 @@ const howItWorks = [
     {
         id: 1,
         title: 'Create Your Profile',
-        description: 'Fill in your details, preferences, and what makes you unique. A complete profile gets more attention.',
+        description: 'Fill in your details, preferences, and what makes you unique. A complete profile for a Bride or Groom gets more attention.',
         icon: <Edit className="w-8 h-8" />,
-        href: '/app/create-profile'
+        href: '/app/create-bride-profile'
     },
     {
         id: 2,

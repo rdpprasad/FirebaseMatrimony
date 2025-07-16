@@ -24,7 +24,8 @@ const navItems = [
   { href: "/app/messages", icon: MessageSquare, label: "Messages" },
   { href: "/app/smart-match", icon: Gem, label: "Smart Match" },
   { href: "/app/profile", icon: User, label: "My Profile" },
-  { href: "/app/create-profile", icon: Edit, label: "Create Profile" },
+  { href: "/app/create-bride-profile", icon: Edit, label: "Create Bride Profile" },
+  { href: "/app/create-groom-profile", icon: Edit, label: "Create Groom Profile" },
 ];
 
 const helpNavItem = { href: "/app/help", icon: LifeBuoy, label: "Help & Support" };

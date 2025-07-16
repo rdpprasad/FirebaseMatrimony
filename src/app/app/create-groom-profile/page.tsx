@@ -17,7 +17,7 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
-const user = allProfiles[0];
+const user = allProfiles[1];
 
 const indianBachelorDegrees = [
   "Bachelor of Arts (B.A.)",
@@ -103,11 +103,11 @@ const heightOptions = () => {
     return options;
 }
 
-export default function CreateProfilePage() {
+export default function CreateGroomProfilePage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-headline font-bold tracking-tight">Create Your Profile</h1>
+        <h1 className="text-3xl font-headline font-bold tracking-tight">Create Groom's Profile</h1>
         <p className="text-muted-foreground">A complete and authentic profile gets the best matches.</p>
       </div>
 
@@ -115,7 +115,7 @@ export default function CreateProfilePage() {
         <div className="lg:col-span-1 flex flex-col gap-8">
             <Card className="shadow-lg">
                 <CardHeader>
-                    <CardTitle>My Photos</CardTitle>
+                    <CardTitle>Groom's Photos</CardTitle>
                     <CardDescription>Add up to 5 photos.</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -141,7 +141,7 @@ export default function CreateProfilePage() {
             <Card className="shadow-lg">
                 <CardHeader>
                     <CardTitle>Video Introduction</CardTitle>
-                    <CardDescription>Let your personality shine!</CardDescription>
+                    <CardDescription>Let his personality shine!</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                      <div className="aspect-video bg-muted rounded-md flex items-center justify-center">
@@ -155,8 +155,8 @@ export default function CreateProfilePage() {
         <div className="lg:col-span-2">
             <Card className="shadow-lg">
                 <CardHeader>
-                    <CardTitle className="font-headline text-2xl">Profile Information</CardTitle>
-                    <CardDescription>This is how other members will see you. Make it count!</CardDescription>
+                    <CardTitle className="font-headline text-2xl">Groom's Information</CardTitle>
+                    <CardDescription>This is how other members will see the groom. Make it count!</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -202,7 +202,7 @@ export default function CreateProfilePage() {
                             <Label htmlFor="height">Height</Label>
                             <Select>
                                 <SelectTrigger id="height">
-                                    <SelectValue placeholder="Select your height" />
+                                    <SelectValue placeholder="Select height" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {heightOptions()}
@@ -236,7 +236,7 @@ export default function CreateProfilePage() {
                             <Label htmlFor="occupation">Occupation</Label>
                             <Select>
                                 <SelectTrigger id="occupation">
-                                    <SelectValue placeholder="Select your occupation"/>
+                                    <SelectValue placeholder="Select occupation"/>
                                 </SelectTrigger>
                                 <SelectContent className="max-h-60">
                                     {occupationCategories.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
@@ -253,7 +253,7 @@ export default function CreateProfilePage() {
                             <Input id="interests" defaultValue={user.interests.join(', ')} />
                         </div>
                         <div className="sm:col-span-2 space-y-2">
-                            <Label htmlFor="profile-details">About Me</Label>
+                            <Label htmlFor="profile-details">About the Groom</Label>
                             <Textarea id="profile-details" rows={4} defaultValue={user.profileDetails} />
                         </div>
                         <div className="sm:col-span-2 space-y-2">
