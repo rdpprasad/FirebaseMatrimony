@@ -3,9 +3,33 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Heart, Users, Search, MessageSquare, Gem, CheckCircle } from 'lucide-react';
-import { successStories, howItWorks } from '@/lib/mock-data.tsx';
+import { Heart, Users, Search, MessageSquare, Gem, CheckCircle, Edit } from 'lucide-react';
+import { successStories } from '@/lib/mock-data.tsx';
 import { Logo } from '@/components/logo';
+
+const howItWorks = [
+    {
+        id: 1,
+        title: 'Create Your Profile',
+        description: 'Fill in your details, preferences, and what makes you unique. A complete profile gets more attention.',
+        icon: <Edit className="w-8 h-8" />,
+        href: '/app/create-profile'
+    },
+    {
+        id: 2,
+        title: 'Search & Discover',
+        description: 'Use our advanced filters or AI-powered Smart Match tool to find profiles that truly resonate with you.',
+        icon: <Search className="w-8 h-8" />,
+        href: '/app/search'
+    },
+    {
+        id: 3,
+        title: 'Connect & Communicate',
+        description: 'Start conversations with your matches through our secure messaging system and build your connection.',
+        icon: <Heart className="w-8 h-8" />,
+        href: '/app/messages'
+    }
+];
 
 function LandingHeader() {
   return (
@@ -90,17 +114,19 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {howItWorks.map((step) => (
-                <Card key={step.id} className="text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <CardHeader>
-                    <div className="mx-auto bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                      {step.icon}
-                    </div>
-                    <CardTitle className="font-headline text-2xl">{step.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{step.description}</p>
-                  </CardContent>
-                </Card>
+                <Link key={step.id} href={step.href}>
+                  <Card className="text-center shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+                    <CardHeader>
+                      <div className="mx-auto bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        {step.icon}
+                      </div>
+                      <CardTitle className="font-headline text-2xl">{step.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{step.description}</p>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
           </div>

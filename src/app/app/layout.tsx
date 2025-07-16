@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
-import { LayoutDashboard, Search, MessageSquare, User, Gem, LogOut } from "lucide-react";
+import { LayoutDashboard, Search, MessageSquare, User, Gem, LogOut, Edit } from "lucide-react";
 
 const navItems = [
   { href: "/app/dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -24,6 +24,7 @@ const navItems = [
   { href: "/app/messages", icon: MessageSquare, label: "Messages" },
   { href: "/app/smart-match", icon: Gem, label: "Smart Match" },
   { href: "/app/profile", icon: User, label: "My Profile" },
+  { href: "/app/create-profile", icon: Edit, label: "Create Profile" },
 ];
 
 export default function AppLayout({
