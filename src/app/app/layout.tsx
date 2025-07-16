@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
-import { LayoutDashboard, Search, MessageSquare, User, Gem, LogOut, Edit } from "lucide-react";
+import { LayoutDashboard, Search, MessageSquare, User, Gem, LogOut, Edit, LifeBuoy } from "lucide-react";
 
 const navItems = [
   { href: "/app/dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -26,6 +26,8 @@ const navItems = [
   { href: "/app/profile", icon: User, label: "My Profile" },
   { href: "/app/create-profile", icon: Edit, label: "Create Profile" },
 ];
+
+const helpNavItem = { href: "/app/help", icon: LifeBuoy, label: "Help & Support" };
 
 export default function AppLayout({
   children,
@@ -57,6 +59,18 @@ export default function AppLayout({
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+                <SidebarMenuItem key={helpNavItem.href}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname === helpNavItem.href}
+                    tooltip={helpNavItem.label}
+                  >
+                    <Link href={helpNavItem.href}>
+                      <helpNavItem.icon />
+                      <span>{helpNavItem.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
           <SidebarFooter>
