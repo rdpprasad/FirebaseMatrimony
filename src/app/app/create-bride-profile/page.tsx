@@ -1,8 +1,8 @@
 
 'use client';
 
+import { useState, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -104,6 +104,33 @@ const heightOptions = () => {
 }
 
 export default function CreateBrideProfilePage() {
+  const [photos, setPhotos] = useState<(string | null)[]>([user.avatar, null, null, null, null]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const selectedPhotoIndex = useRef<number | null>(null);
+
+  const handlePhotoClick = (index: number) => {
+    selectedPhotoIndex.current = index;
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0] && selectedPhotoIndex.current !== null) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const newPhotos = [...photos];
+        newPhotos[selectedPhotoIndex.current!] = e.target?.result as string;
+        setPhotos(newPhotos);
+      };
+      reader.readAsDataURL(file);
+    }
+    // Reset file input
+    if(fileInputRef.current) {
+        fileInputRef.current.value = '';
+    }
+    selectedPhotoIndex.current = null;
+  };
+
   return (
     <div className="space-y-8">
       <div>
@@ -119,16 +146,23 @@ export default function CreateBrideProfilePage() {
                     <CardDescription>Add up to 5 photos.</CardDescription>
                 </CardHeader>
                 <CardContent>
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        className="hidden"
+                        accept="image/*"
+                    />
                     <div className="grid grid-cols-3 gap-2">
-                        {[...Array(5)].map((_, i) => (
-                             <div key={i} className="aspect-square bg-muted rounded-md flex items-center justify-center relative group">
-                                {i === 0 ? (
-                                    <Image src={user.avatar} alt="User photo" layout="fill" className="rounded-md object-cover" data-ai-hint="portrait person" />
+                        {photos.map((photo, i) => (
+                             <div key={i} className="aspect-square bg-muted rounded-md flex items-center justify-center relative group cursor-pointer" onClick={() => handlePhotoClick(i)}>
+                                {photo ? (
+                                    <Image src={photo} alt={`User photo ${i + 1}`} layout="fill" className="rounded-md object-cover" data-ai-hint="portrait person" />
                                 ) : (
                                     <Camera className="h-6 w-6 text-muted-foreground" />
                                 )}
                                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-md">
-                                    <Button variant="ghost" size="icon" className="text-white hover:bg-white/20">
+                                    <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 pointer-events-none">
                                         <Upload className="h-5 w-5" />
                                     </Button>
                                 </div>
