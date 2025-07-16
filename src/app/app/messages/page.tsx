@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -7,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { allProfiles } from '@/lib/mock-data.tsx';
 import { cn } from '@/lib/utils';
-import { SendHorizonal, Smile } from 'lucide-react';
+import { SendHorizonal, Smile, Phone, Video } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default function MessagesPage() {
@@ -57,12 +58,22 @@ export default function MessagesPage() {
         <div className="col-span-2 lg:col-span-3 flex flex-col h-full">
           {selectedUser ? (
             <>
-              <div className="border-b p-4 flex items-center gap-4">
-                <Avatar>
-                  <AvatarImage src={selectedUser.avatar} data-ai-hint="portrait person" />
-                  <AvatarFallback>{selectedUser.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <h2 className="font-semibold text-lg">{selectedUser.name}</h2>
+              <div className="border-b p-4 flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <Avatar>
+                    <AvatarImage src={selectedUser.avatar} data-ai-hint="portrait person" />
+                    <AvatarFallback>{selectedUser.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <h2 className="font-semibold text-lg">{selectedUser.name}</h2>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="icon">
+                        <Phone className="h-5 w-5" />
+                    </Button>
+                     <Button variant="ghost" size="icon">
+                        <Video className="h-5 w-5" />
+                    </Button>
+                </div>
               </div>
               <ScrollArea className="flex-1 p-6">
                 <div className="space-y-4">
