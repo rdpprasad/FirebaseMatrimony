@@ -67,14 +67,14 @@ export const successStories = [
       id: 1,
       name: "Anjali & Sameer",
       location: "Joined 2023, Married 2024",
-      story: "We connected instantly over our shared love for old Hindi music and spicy food. Sign Without Caste made it so easy to find someone who truly understands me. We're so grateful!",
+      story: "We connected instantly over our shared love for old Hindi music and spicy food. No Caste Matrimony made it so easy to find someone who truly understands me. We're so grateful!",
       avatar: "https://placehold.co/100x100.png",
     },
     {
       id: 2,
       name: "Karan & Sunita",
       location: "Joined 2022, Married 2023",
-      story: "I wasn't sure about online matrimony, but the verified profiles and detailed preferences on Sign Without Caste gave me confidence. I found Karan, and our journey has been nothing short of magical.",
+      story: "I wasn't sure about online matrimony, but the verified profiles and detailed preferences on No Caste Matrimony gave me confidence. I found Karan, and our journey has been nothing short of magical.",
       avatar: "https://placehold.co/100x100.png",
     },
     {
@@ -88,7 +88,7 @@ export const successStories = [
       id: 4,
       name: "Aisha & Kabir",
       location: "Joined 2022, Married 2023",
-      story: "Finding someone who shared my modern values and respected my career was important. Sign Without Caste connected me with Kabir, my perfect partner in every sense.",
+      story: "Finding someone who shared my modern values and respected my career was important. No Caste Matrimony connected me with Kabir, my perfect partner in every sense.",
       avatar: "https://placehold.co/100x100.png",
     },
 ];

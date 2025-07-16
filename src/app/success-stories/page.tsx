@@ -35,7 +35,7 @@ function SuccessFooter() {
     <footer className="border-t">
       <div className="container py-8 flex justify-between items-center">
         <Logo />
-        <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Sign Without Caste. All rights reserved.</p>
+        <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} No Caste Matrimony. All rights reserved.</p>
       </div>
     </footer>
   );
@@ -51,7 +51,7 @@ export default function SuccessStoriesPage() {
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">Journeys of Love</h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              Discover the beautiful stories of couples who found their forever love on Sign Without Caste. Your story could be next.
+              Discover the beautiful stories of couples who found their forever love on No Caste Matrimony. Your story could be next.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
