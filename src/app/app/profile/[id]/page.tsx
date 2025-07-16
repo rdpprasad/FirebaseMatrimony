@@ -40,13 +40,13 @@ export default function ProfileDetailPage({ params }: { params: { id: string } }
           <Card className="shadow-lg">
             <CardContent className="p-0">
                  <div className="grid grid-cols-1 gap-2">
-                    <div className="aspect-w-1 aspect-h-1">
-                        <Image src={photos[0]} alt={`Photo of ${profile.name}`} width={400} height={400} className="rounded-t-lg object-cover w-full h-full" data-ai-hint="portrait person" />
+                    <div className="relative aspect-square w-full">
+                        <Image src={photos[0]} alt={`Photo of ${profile.name}`} layout="fill" objectFit="cover" className="rounded-t-lg" data-ai-hint="portrait person" />
                     </div>
                     <div className="grid grid-cols-4 gap-2 p-2">
                         {photos.slice(1).map((photo, i) => (
-                            <div key={i} className="aspect-square">
-                                <Image src={photo} alt={`Thumbnail ${i + 1}`} width={100} height={100} className="rounded-md object-cover w-full h-full" data-ai-hint="portrait person" />
+                            <div key={i} className="relative aspect-square">
+                                <Image src={photo} alt={`Thumbnail ${i + 1}`} layout="fill" objectFit="cover" className="rounded-md" data-ai-hint="portrait person" />
                             </div>
                         ))}
                     </div>
