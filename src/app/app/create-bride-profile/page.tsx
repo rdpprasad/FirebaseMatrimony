@@ -2,6 +2,9 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,8 +19,37 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { useToast } from '@/hooks/use-toast';
 
 const user = allProfiles[0];
+
+const profileFormSchema = z.object({
+  name: z.string().min(1, { message: "Full Name is required." }),
+  dob: z.date({
+    required_error: "Date of birth is required.",
+  }),
+  height: z.string().min(1, { message: "Height is required." }),
+  location: z.string().min(1, { message: "Location is required." }),
+  education: z.string().min(1, { message: "Highest Education is required." }),
+  occupation: z.string().min(1, { message: "Occupation is required." }),
+  interests: z.string().optional(),
+  profileDetails: z.string().optional(),
+  preferences: z.string().optional(),
+});
+
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
+
+const defaultValues: Partial<ProfileFormValues> = {
+  name: user.name,
+  height: "",
+  location: user.location,
+  education: user.education,
+  occupation: "",
+  interests: user.interests.join(', '),
+  profileDetails: user.profileDetails,
+  preferences: user.preferences,
+};
 
 const educationLevels = [
   {
@@ -189,6 +221,21 @@ export default function CreateBrideProfilePage() {
   const [photos, setPhotos] = useState<(string | null)[]>([user.avatar, null, null, null, null]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const selectedPhotoIndex = useRef<number | null>(null);
+  const { toast } = useToast();
+
+  const form = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileFormSchema),
+    defaultValues,
+    mode: "onChange",
+  });
+
+  function onSubmit(data: ProfileFormValues) {
+    console.log(data);
+    toast({
+      title: "Profile Saved!",
+      description: "The bride's profile has been successfully saved.",
+    })
+  }
 
   const handlePhotoClick = (index: number) => {
     selectedPhotoIndex.current = index;
@@ -206,7 +253,6 @@ export default function CreateBrideProfilePage() {
       };
       reader.readAsDataURL(file);
     }
-    // Reset file input
     if(fileInputRef.current) {
         fileInputRef.current.value = '';
     }
@@ -275,72 +321,112 @@ export default function CreateBrideProfilePage() {
                     <CardDescription>This is how other members will see the bride. Make it count!</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {/* Personal Details */}
+                    <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="sm:col-span-2">
                             <h3 className="text-lg font-semibold font-headline">Personal Details</h3>
                         </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="name">Full Name</Label>
-                            <Input id="name" defaultValue={user.name} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="dob">Date of Birth</Label>
-                             <Popover>
+                        <FormField
+                          control={form.control}
+                          name="name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Full Name</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="dob"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-col">
+                              <FormLabel>Date of Birth</FormLabel>
+                              <Popover>
                                 <PopoverTrigger asChild>
-                                <Button
-                                    variant={"outline"}
-                                    className={cn(
-                                    "w-full justify-start text-left font-normal",
-                                    !user.age && "text-muted-foreground"
-                                    )}
-                                >
-                                    <CalendarIcon className="mr-2 h-4 w-4" />
-                                    {user.age ? format(new Date(new Date().setFullYear(new Date().getFullYear() - user.age)), "PPP") : <span>Pick a date</span>}
-                                </Button>
+                                  <FormControl>
+                                    <Button
+                                      variant={"outline"}
+                                      className={cn(
+                                        "w-full justify-start text-left font-normal",
+                                        !field.value && "text-muted-foreground"
+                                      )}
+                                    >
+                                      <CalendarIcon className="mr-2 h-4 w-4" />
+                                      {field.value ? (
+                                        format(field.value, "PPP")
+                                      ) : (
+                                        <span>Pick a date</span>
+                                      )}
+                                    </Button>
+                                  </FormControl>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0">
-                                <Calendar
+                                <PopoverContent className="w-auto p-0" align="start">
+                                  <Calendar
                                     mode="single"
+                                    selected={field.value}
+                                    onSelect={field.onChange}
                                     captionLayout="dropdown-buttons"
                                     fromYear={1970}
                                     toYear={new Date().getFullYear() - 18}
-                                    // onSelect={field.onChange}
                                     disabled={(date) =>
                                         date > new Date() || date < new Date("1900-01-01")
                                     }
                                     initialFocus
-                                />
+                                  />
                                 </PopoverContent>
-                            </Popover>
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="height">Height</Label>
-                            <Select>
-                                <SelectTrigger id="height">
-                                    <SelectValue placeholder="Select height" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {heightOptions()}
-                                </SelectContent>
-                            </Select>
-                        </div>
-                         <div className="space-y-2">
-                            <Label htmlFor="location">Location</Label>
-                            <Input id="location" defaultValue={user.location} />
-                        </div>
+                              </Popover>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="height"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Height</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger><SelectValue placeholder="Select height" /></SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>{heightOptions()}</SelectContent>
+                                </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                         <FormField
+                          control={form.control}
+                          name="location"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Location</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-                        {/* Professional & Education Details */}
                         <div className="sm:col-span-2 mt-4">
                              <h3 className="text-lg font-semibold font-headline">Education & Career</h3>
                         </div>
-                         <div className="space-y-2">
-                            <Label htmlFor="education">Highest Education</Label>
-                            <Select defaultValue={user.education}>
-                                <SelectTrigger id="education">
-                                    <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent className="max-h-80">
+                        <FormField
+                          control={form.control}
+                          name="education"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Highest Education</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger><SelectValue /></SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent className="max-h-80">
                                     {educationLevels.map(group => (
                                         <SelectGroup key={group.category}>
                                             <SelectLabel className="bg-muted m-1 p-2 rounded-md font-bold">{group.category}</SelectLabel>
@@ -350,15 +436,22 @@ export default function CreateBrideProfilePage() {
                                         </SelectGroup>
                                     ))}
                                 </SelectContent>
-                            </Select>
-                        </div>
-                         <div className="space-y-2">
-                            <Label htmlFor="occupation">Occupation</Label>
-                            <Select>
-                                <SelectTrigger id="occupation">
-                                    <SelectValue placeholder="Select occupation"/>
-                                </SelectTrigger>
-                                <SelectContent className="max-h-80">
+                                </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="occupation"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Occupation</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger><SelectValue placeholder="Select occupation"/></SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent className="max-h-80">
                                     {occupationCategories.map(group => (
                                         <SelectGroup key={group.category}>
                                             <SelectLabel className="bg-muted m-1 p-2 rounded-md">{group.category}</SelectLabel>
@@ -368,29 +461,59 @@ export default function CreateBrideProfilePage() {
                                         </SelectGroup>
                                     ))}
                                 </SelectContent>
-                            </Select>
-                        </div>
+                                </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                         
-                        {/* About Me & Preferences */}
                         <div className="sm:col-span-2 mt-4">
                             <h3 className="text-lg font-semibold font-headline">About & Preferences</h3>
                         </div>
-                        <div className="sm:col-span-2 space-y-2">
-                            <Label htmlFor="interests">Interests (comma separated)</Label>
-                            <Input id="interests" defaultValue={user.interests.join(', ')} />
-                        </div>
-                        <div className="sm:col-span-2 space-y-2">
-                            <Label htmlFor="profile-details">About the Bride</Label>
-                            <Textarea id="profile-details" rows={4} defaultValue={user.profileDetails} />
-                        </div>
-                        <div className="sm:col-span-2 space-y-2">
-                            <Label htmlFor="preferences">Partner Preferences</Label>
-                            <Textarea id="preferences" rows={4} defaultValue={user.preferences} />
-                        </div>
+                        <FormField
+                            control={form.control}
+                            name="interests"
+                            render={({ field }) => (
+                                <FormItem className="sm:col-span-2">
+                                <FormLabel>Interests (comma separated)</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="profileDetails"
+                            render={({ field }) => (
+                                <FormItem className="sm:col-span-2">
+                                <FormLabel>About the Bride</FormLabel>
+                                <FormControl>
+                                    <Textarea rows={4} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="preferences"
+                            render={({ field }) => (
+                                <FormItem className="sm:col-span-2">
+                                <FormLabel>Partner Preferences</FormLabel>
+                                <FormControl>
+                                    <Textarea rows={4} {...field} />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <div className="sm:col-span-2 flex justify-end">
-                            <Button><Save className="mr-2 h-4 w-4"/> Save Profile</Button>
+                            <Button type="submit"><Save className="mr-2 h-4 w-4"/> Save Profile</Button>
                         </div>
                     </form>
+                    </Form>
                 </CardContent>
             </Card>
         </div>
@@ -398,5 +521,3 @@ export default function CreateBrideProfilePage() {
     </div>
   );
 }
-
-    
