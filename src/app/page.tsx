@@ -51,6 +51,11 @@ const specialMatchCategories = [
       "category": "NRI Matches",
       "description": "Matches specifically for Indians settled abroad (Non-Resident Indians).",
        "icon": <Globe className="w-8 h-8 text-primary" />
+    },
+    {
+      "category": "LGBTQ+ Inclusion",
+      "description": "Inclusive matching options for same-sex, transgender, and non-binary individuals.",
+      "icon": <Users className="w-8 h-8 text-primary" />
     }
   ];
 
@@ -192,7 +197,7 @@ export default function Home() {
               <h2 className="font-headline text-3xl md:text-4xl font-bold">Special Matchmaking For Every Need</h2>
               <p className="mt-4 text-lg text-muted-foreground">Love comes in all forms. We are committed to helping everyone find their special someone.</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {specialMatchCategories.map((item) => (
                 <Card key={item.category} className="text-center shadow-lg hover:shadow-xl transition-shadow duration-300 h-full p-6 flex flex-col items-center">
                     <div className="bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mb-4">
@@ -242,4 +247,5 @@ export default function Home() {
       <LandingFooter />
     </div>
   );
-}
+
+    
