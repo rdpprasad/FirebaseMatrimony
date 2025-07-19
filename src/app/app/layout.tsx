@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -17,12 +18,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { LayoutDashboard, Search, MessageSquare, User, Gem, LogOut, Edit, LifeBuoy } from "lucide-react";
+import { AstrologyIcon } from "@/components/astrology-icon";
 
 const navItems = [
   { href: "/app/dashboard", icon: LayoutDashboard, label: "Dashboard" },
   { href: "/app/search", icon: Search, label: "Search" },
   { href: "/app/messages", icon: MessageSquare, label: "Messages" },
   { href: "/app/smart-match", icon: Gem, label: "Smart Match" },
+  { href: "/app/kundali-match", icon: AstrologyIcon, label: "Kundali Match" },
   // { href: "/app/profile", icon: User, label: "My Profile" },
   { href: "/app/create-bride-profile", icon: Edit, label: "Create Bride Profile" },
   { href: "/app/create-groom-profile", icon: Edit, label: "Create Groom Profile" },
