@@ -18,9 +18,10 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const user = allProfiles[0];
 
@@ -46,6 +47,7 @@ const profileFormSchema = z.object({
   interests: z.string().optional(),
   profileDetails: z.string().optional(),
   preferences: z.string().optional(),
+  profileCategories: z.array(z.string()).optional(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -151,6 +153,14 @@ const heightOptions = () => {
     }
     return options;
 }
+
+const specialMatchCategories = [
+    { id: "modern", label: "No-Caste / Modern Marriage", description: "Matches focused on compatibility, values, and lifestyle instead of caste or religion." },
+    { id: "divorcee", label: "Divorcee / Second Marriage", description: "Seeking a second chance at marriage after divorce or separation." },
+    { id: "senior", label: "Senior Citizen Match", description: "Marriage or companionship for individuals aged 50 and above." },
+    { id: "nri", label: "NRI Match", description: "For Indians settled abroad (Non-Resident Indians)." },
+    { id: "lgbtq", label: "LGBTQ+ Inclusion", description: "Inclusive matching for same-sex, transgender, and non-binary individuals." },
+];
 
 export default function CreateBrideProfilePage() {
   const [photos, setPhotos] = useState<(string | null)[]>([user.avatar, null, null, null, null]);
@@ -305,10 +315,10 @@ export default function CreateBrideProfilePage() {
                                             selected={field.value}
                                             onSelect={field.onChange}
                                             captionLayout="dropdown-buttons"
-                                            fromYear={1970}
+                                            fromYear={new Date().getFullYear() - 70}
                                             toYear={new Date().getFullYear() - 18}
                                             disabled={(date) =>
-                                                date > new Date() || date < new Date("1900-01-01")
+                                                date > new Date(new Date().setFullYear(new Date().getFullYear() - 18)) || date < new Date("1950-01-01")
                                             }
                                             initialFocus
                                           />
@@ -602,6 +612,49 @@ export default function CreateBrideProfilePage() {
                             />
                         </div>
 
+                         <div>
+                            <h3 className="text-lg font-semibold font-headline mb-4">Profile Category</h3>
+                             <FormField
+                                control={form.control}
+                                name="profileCategories"
+                                render={() => (
+                                    <FormItem className="space-y-4">
+                                        {specialMatchCategories.map((item) => (
+                                            <FormField
+                                                key={item.id}
+                                                control={form.control}
+                                                name="profileCategories"
+                                                render={({ field }) => {
+                                                    return (
+                                                        <FormItem
+                                                            key={item.id}
+                                                            className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4"
+                                                        >
+                                                            <FormControl>
+                                                                <Checkbox
+                                                                    checked={field.value?.includes(item.id)}
+                                                                    onCheckedChange={(checked) => {
+                                                                        return checked
+                                                                            ? field.onChange([...(field.value || []), item.id])
+                                                                            : field.onChange(field.value?.filter((value) => value !== item.id));
+                                                                    }}
+                                                                />
+                                                            </FormControl>
+                                                            <div className="space-y-1 leading-none">
+                                                                <FormLabel>{item.label}</FormLabel>
+                                                                <FormDescription>{item.description}</FormDescription>
+                                                            </div>
+                                                        </FormItem>
+                                                    );
+                                                }}
+                                            />
+                                        ))}
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+
                         <div>
                             <h3 className="text-lg font-semibold font-headline mb-4">About & Preferences</h3>
                             <div className="space-y-6">
@@ -659,3 +712,5 @@ export default function CreateBrideProfilePage() {
     </div>
   );
 }
+
+    

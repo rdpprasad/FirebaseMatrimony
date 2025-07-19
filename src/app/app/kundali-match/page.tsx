@@ -56,8 +56,8 @@ function BirthDetailsForm({ title, details, setDetails, gender }: { title: strin
                                     selected={details.dob ? new Date(details.dob) : undefined}
                                     onSelect={handleDateChange}
                                     captionLayout="dropdown-buttons"
-                                    fromYear={1950}
-                                    toYear={new Date().getFullYear()}
+                                    fromYear={new Date().getFullYear() - 70}
+                                    toYear={new Date().getFullYear() - 18}
                                     disabled={(date) => date > new Date() || date < new Date("1950-01-01")}
                                     initialFocus
                                 />
@@ -248,3 +248,5 @@ export default function KundaliMatchPage() {
         </div>
     );
 }
+
+    
