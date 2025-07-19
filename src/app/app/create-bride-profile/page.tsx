@@ -29,6 +29,7 @@ const profileFormSchema = z.object({
   dob: z.date({
     required_error: "Date of birth is required.",
   }),
+  religion: z.string().min(1, { message: "Religion is required." }),
   height: z.string().min(1, { message: "Height is required." }),
   location: z.string().min(1, { message: "Location is required." }),
   education: z.string().min(1, { message: "Highest Education is required." }),
@@ -42,6 +43,7 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 const defaultValues: Partial<ProfileFormValues> = {
   name: user.name,
+  religion: "",
   height: "",
   location: user.location,
   education: user.education,
@@ -202,6 +204,21 @@ const occupationCategories = [
         "category": "Miscellaneous Income Sources",
         "items": ["Rental Income (Property)", "Book Royalties", "Music Royalties", "Pension / Annuity", "Cashback / Rewards", "MLM / Network Marketing (Caution Advised)", "Affiliate Commissions"]
     }
+];
+
+const religionOptions = [
+    "Hinduism",
+    "Islam",
+    "Christianity",
+    "Sikhism",
+    "Buddhism",
+    "Jainism",
+    "Judaism",
+    "Zoroastrianism",
+    "Baháʼí Faith",
+    "Spiritual - not religious",
+    "No Religion",
+    "Other"
 ];
 
 const heightOptions = () => {
@@ -384,12 +401,32 @@ export default function CreateBrideProfilePage() {
                           )}
                         />
                         <FormField
+                            control={form.control}
+                            name="religion"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Religion</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger><SelectValue placeholder="Select religion" /></SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {religionOptions.map(religion => (
+                                                <SelectItem key={religion} value={religion}>{religion}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
                           control={form.control}
                           name="height"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Height</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <Select onValuechange={field.onChange} defaultValue={field.value}>
                                     <FormControl>
                                         <SelectTrigger><SelectValue placeholder="Select height" /></SelectTrigger>
                                     </FormControl>
@@ -403,7 +440,7 @@ export default function CreateBrideProfilePage() {
                           control={form.control}
                           name="location"
                           render={({ field }) => (
-                            <FormItem>
+                            <FormItem className="sm:col-span-2">
                               <FormLabel>Location</FormLabel>
                               <FormControl>
                                 <Input {...field} />
@@ -454,7 +491,7 @@ export default function CreateBrideProfilePage() {
                                     <SelectContent className="max-h-80">
                                     {occupationCategories.map(group => (
                                         <SelectGroup key={group.category}>
-                                            <SelectLabel className="bg-muted m-1 p-2 rounded-md">{group.category}</SelectLabel>
+                                            <SelectLabel className="bg-muted m-1 p-2 rounded-md font-bold">{group.category}</SelectLabel>
                                             {group.items.map(item => (
                                                 <SelectItem key={item} value={item}>{item}</SelectItem>
                                             ))}
@@ -521,3 +558,5 @@ export default function CreateBrideProfilePage() {
     </div>
   );
 }
+
+    
