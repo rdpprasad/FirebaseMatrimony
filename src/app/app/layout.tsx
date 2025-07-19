@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
-import { LayoutDashboard, Search, MessageSquare, User, Gem, LogOut, Edit, LifeBuoy } from "lucide-react";
+import { LayoutDashboard, Search, MessageSquare, User, Gem, LogOut, Edit, LifeBuoy, Settings } from "lucide-react";
 import { AstrologyIcon } from "@/components/astrology-icon";
 
 const navItems = [
@@ -31,7 +31,11 @@ const navItems = [
   { href: "/app/create-groom-profile", icon: Edit, label: "Create Groom Profile" },
 ];
 
-const helpNavItem = { href: "/app/help", icon: LifeBuoy, label: "Help & Support" };
+const bottomNavItems = [
+    { href: "/app/settings", icon: Settings, label: "Settings" },
+    { href: "/app/help", icon: LifeBuoy, label: "Help & Support" }
+];
+
 
 export default function AppLayout({
   children,
@@ -63,22 +67,24 @@ export default function AppLayout({
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
-                <SidebarMenuItem key={helpNavItem.href}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname === helpNavItem.href}
-                    tooltip={helpNavItem.label}
-                  >
-                    <Link href={helpNavItem.href}>
-                      <helpNavItem.icon />
-                      <span>{helpNavItem.label}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
           <SidebarFooter>
             <SidebarMenu>
+                {bottomNavItems.map((item) => (
+                    <SidebarMenuItem key={item.href}>
+                        <SidebarMenuButton
+                        asChild
+                        isActive={pathname === item.href}
+                        tooltip={item.label}
+                        >
+                        <Link href={item.href}>
+                            <item.icon />
+                            <span>{item.label}</span>
+                        </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                ))}
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="Logout">
                   <Link href="/">
