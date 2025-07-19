@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Heart, Users, Search, MessageSquare, Gem, CheckCircle, Edit } from 'lucide-react';
+import { Heart, Users, Search, MessageSquare, Gem, CheckCircle, Edit, Globe, RefreshCw, SmilePlus } from 'lucide-react';
 import { successStories } from '@/lib/mock-data.tsx';
 import { Logo } from '@/components/logo';
 
@@ -30,6 +30,34 @@ const howItWorks = [
         href: '/app/messages'
     }
 ];
+
+const specialMatchCategories = [
+    {
+      "category": "No-Caste / Modern Marriages",
+      "description": "Matches focused on compatibility, values, and lifestyle instead of caste or religion.",
+      "icon": <Heart className="w-8 h-8 text-primary" />
+    },
+    {
+      "category": "Divorcee / Second Marriage",
+      "description": "Profiles of individuals seeking second chances at marriage after divorce or separation.",
+       "icon": <RefreshCw className="w-8 h-8 text-primary" />
+    },
+    {
+      "category": "Senior Citizens Match",
+      "description": "Marriage or companionship matches for individuals aged 50 and above.",
+      "icon": <SmilePlus className="w-8 h-8 text-primary" />
+    },
+    {
+      "category": "NRI Matches",
+      "description": "Matches specifically for Indians settled abroad (Non-Resident Indians).",
+       "icon": <Globe className="w-8 h-8 text-primary" />
+    },
+    {
+      "category": "LGBTQ+ Inclusion",
+      "description": "Inclusive matching options for same-sex, transgender, and non-binary individuals.",
+      "icon": <Users className="w-8 h-8 text-primary" />
+    }
+  ];
 
 function LandingHeader() {
   return (
@@ -62,7 +90,7 @@ function LandingFooter() {
         <div className="flex items-center space-x-2">
           <Logo />
         </div>
-        <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} No Caste Matrimony. All rights reserved.</p>
+        <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Bandhan Forever. All rights reserved.</p>
         <div className="flex items-center space-x-4">
             <Link href="#" className="text-sm text-muted-foreground hover:text-foreground">Privacy Policy</Link>
             <Link href="#" className="text-sm text-muted-foreground hover:text-foreground">Terms of Service</Link>
@@ -82,7 +110,7 @@ export default function Home() {
             <div className="space-y-6">
               <h1 className="font-headline text-4xl md:text-6xl font-bold tracking-tight text-primary">Find your forever, together.</h1>
               <p className="text-lg text-muted-foreground">
-                Welcome to No Caste Matrimony, a modern platform for the Indian community to discover genuine connections. We believe in love and compatibility, beyond boundaries.
+                Welcome to Bandhan Forever, a modern platform for the Indian community to discover genuine connections. We believe in love and compatibility, beyond boundaries.
               </p>
               <div className="flex gap-4">
                 <Button size="lg" asChild>
@@ -163,10 +191,30 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="success-stories" className="py-20 bg-secondary">
+        <section id="special-matches" className="py-20 bg-secondary">
           <div className="container">
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="font-headline text-3xl md:text-4xl font-bold">Love Found on No Caste Matrimony</h2>
+              <h2 className="font-headline text-3xl md:text-4xl font-bold">Special Matchmaking For Every Need</h2>
+              <p className="mt-4 text-lg text-muted-foreground">Love comes in all forms. We are committed to helping everyone find their special someone.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {specialMatchCategories.map((item) => (
+                <Card key={item.category} className="text-center shadow-lg hover:shadow-xl transition-shadow duration-300 h-full p-6 flex flex-col items-center">
+                    <div className="bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                        {item.icon}
+                    </div>
+                    <CardTitle className="font-headline text-xl mb-2">{item.category}</CardTitle>
+                    <p className="text-muted-foreground text-sm">{item.description}</p>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="success-stories" className="py-20">
+          <div className="container">
+            <div className="text-center max-w-2xl mx-auto mb-12">
+              <h2 className="font-headline text-3xl md:text-4xl font-bold">Love Found on Bandhan Forever</h2>
               <p className="mt-4 text-lg text-muted-foreground">Don't just take our word for it. Read stories from couples who found their forever love with us.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -199,4 +247,5 @@ export default function Home() {
       <LandingFooter />
     </div>
   );
-}
+
+    
