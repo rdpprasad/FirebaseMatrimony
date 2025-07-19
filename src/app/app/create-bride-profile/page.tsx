@@ -295,7 +295,7 @@ export default function CreateBrideProfilePage() {
                                 <SelectContent className="max-h-80">
                                     {occupationCategories.map(group => (
                                         <SelectGroup key={group.category}>
-                                            <SelectLabel>{group.category}</SelectLabel>
+                                            <SelectLabel className="bg-muted m-1 p-2 rounded-md">{group.category}</SelectLabel>
                                             {group.items.map(item => (
                                                 <SelectItem key={item} value={item}>{item}</SelectItem>
                                             ))}
@@ -332,5 +332,3 @@ export default function CreateBrideProfilePage() {
     </div>
   );
 }
-
-    
