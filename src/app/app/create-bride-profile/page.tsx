@@ -19,45 +19,107 @@ import Image from 'next/image';
 
 const user = allProfiles[0];
 
-const indianBachelorDegrees = [
-  "Bachelor of Arts (B.A.)",
-  "Bachelor of Science (B.Sc.)",
-  "Bachelor of Commerce (B.Com.)",
-  "Bachelor of Engineering (B.E.)",
-  "Bachelor of Technology (B.Tech.)",
-  "Bachelor of Architecture (B.Arch.)",
-  "Bachelor of Business Administration (BBA)",
-  "Bachelor of Computer Applications (BCA)",
-  "Bachelor of Medicine, Bachelor of Surgery (MBBS)",
-  "Bachelor of Dental Surgery (BDS)",
-  "Bachelor of Ayurvedic Medicine and Surgery (BAMS)",
-  "Bachelor of Homeopathic Medicine and Surgery (BHMS)",
-  "Bachelor of Laws (LLB)",
-  "Bachelor of Education (B.Ed.)",
-  "Bachelor of Pharmacy (B.Pharm)",
-  "Bachelor of Fine Arts (BFA)",
-  "Bachelor of Design (B.Des.)",
+const educationLevels = [
+  {
+    "category": "School Education",
+    "items": [
+        "10th Class",
+        "12th Class"
+    ]
+  },
+  {
+    "category": "After 10th",
+    "items": [
+      "Diploma in Engineering (Polytechnic)",
+      "Diploma in Pharmacy (D.Pharm)",
+      "Diploma in Computer Applications (DCA)",
+      "Diploma in Fashion Designing",
+      "Diploma in Hotel Management",
+      "Diploma in Agriculture",
+      "Diploma in Web Designing",
+      "Diploma in Photography",
+      "Industrial Training Institute (ITI) Courses"
+    ]
+  },
+  {
+    "category": "Bachelor's Degrees (After 12th)",
+    "items": [
+      "B.A. (Bachelor of Arts)",
+      "B.Sc. (Bachelor of Science)",
+      "B.Com. (Bachelor of Commerce)",
+      "BBA (Bachelor of Business Administration)",
+      "BCA (Bachelor of Computer Applications)",
+      "BSW (Bachelor of Social Work)",
+      "BMS (Bachelor of Management Studies)",
+      "BFA (Bachelor of Fine Arts)",
+      "BHM (Bachelor of Hotel Management)",
+      "B.E. / B.Tech (Engineering)",
+      "MBBS (Medicine)",
+      "BDS (Dental Surgery)",
+      "BAMS (Ayurveda)",
+      "BHMS (Homeopathy)",
+      "B.Pharm (Pharmacy)",
+      "B.Arch (Architecture)",
+      "LLB (Bachelor of Law – 5-year integrated course)",
+      "B.Ed (Bachelor of Education – after graduation)"
+    ]
+  },
+  {
+    "category": "Postgraduate Degrees (After Bachelor's)",
+    "items": [
+      "M.A. (Master of Arts)",
+      "M.Sc. (Master of Science)",
+      "M.Com. (Master of Commerce)",
+      "MBA (Master of Business Administration)",
+      "MCA (Master of Computer Applications)",
+      "M.Tech / M.E. (Engineering)",
+      "M.Ed. (Education)",
+      "MSW (Master of Social Work)",
+      "LL.M (Master of Law)",
+      "M.Pharm (Pharmacy)",
+      "M.Arch (Architecture)",
+      "M.Des (Design)"
+    ]
+  },
+  {
+    "category": "Doctoral Degrees (After PG)",
+    "items": [
+      "Ph.D. (Doctor of Philosophy)",
+      "M.Phil. (Master of Philosophy)",
+      "D.Litt. (Doctor of Literature)",
+      "D.Sc. (Doctor of Science)",
+      "MD/MS (Postgraduate Medicine)",
+      "DM/M.Ch (Super-Speciality in Medicine)"
+    ]
+  },
+  {
+    "category": "Vocational & Certificate Courses",
+    "items": [
+      "Computer Basics / Tally / Excel",
+      "Foreign Language Courses",
+      "Spoken English",
+      "Graphic Design",
+      "Digital Marketing",
+      "Animation & Multimedia",
+      "Mobile Repairing",
+      "Beauty & Wellness",
+      "Fashion Designing (Short Term)"
+    ]
+  },
+  {
+    "category": "Distance & Online Education",
+    "items": [
+      "IGNOU (Indira Gandhi National Open University)",
+      "Swayam (GOI e-learning platform)",
+      "State Open Universities",
+      "Online MBA",
+      "Online BBA",
+      "Online MCA",
+      "Certificate MOOCs (Coursera, edX, etc.)"
+    ]
+  }
 ];
 
-const indianDiplomaCourses = [
-  "Diploma in Civil Engineering",
-  "Diploma in Mechanical Engineering",
-  "Diploma in Electrical Engineering",
-  "Diploma in Computer Science Engineering",
-  "Diploma in Information Technology",
-  "Diploma in Electronics and Communication",
-  "Diploma in Chemical Engineering",
-  "Diploma in Automobile Engineering",
-  "Diploma in Pharmacy (D.Pharm)",
-  "Diploma in Nursing",
-  "Diploma in Medical Laboratory Technology (DMLT)",
-  "Diploma in Hotel Management",
-  "Diploma in Journalism and Mass Communication",
-  "Diploma in Education (D.Ed.)",
-  "Diploma in Fine Arts",
-  "Diploma in Graphic Design",
-  "Diploma in Web Designing",
-];
 
 const occupationCategories = [
     {
@@ -278,11 +340,15 @@ export default function CreateBrideProfilePage() {
                                 <SelectTrigger id="education">
                                     <SelectValue />
                                 </SelectTrigger>
-                                <SelectContent className="max-h-60">
-                                    <p className="p-2 text-xs font-bold text-muted-foreground">Bachelors Degrees</p>
-                                    {indianBachelorDegrees.map(degree => <SelectItem key={degree} value={degree}>{degree}</SelectItem>)}
-                                    <p className="p-2 text-xs font-bold text-muted-foreground">Diplomas</p>
-                                    {indianDiplomaCourses.map(diploma => <SelectItem key={diploma} value={diploma}>{diploma}</SelectItem>)}
+                                <SelectContent className="max-h-80">
+                                    {educationLevels.map(group => (
+                                        <SelectGroup key={group.category}>
+                                            <SelectLabel className="bg-muted m-1 p-2 rounded-md font-bold">{group.category}</SelectLabel>
+                                            {group.items.map(item => (
+                                                <SelectItem key={item} value={item}>{item}</SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    ))}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -332,3 +398,5 @@ export default function CreateBrideProfilePage() {
     </div>
   );
 }
+
+    
