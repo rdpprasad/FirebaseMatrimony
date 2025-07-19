@@ -5,9 +5,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { allProfiles } from '@/lib/mock-data.tsx';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ArrowLeft, Briefcase, Calendar, CheckCircle, GraduationCap, Heart, Locate, MapPin, MessageSquare, Phone, User, Video } from 'lucide-react';
+import { ArrowLeft, Briefcase, Calendar, CheckCircle, GraduationCap, Heart, Locate, MapPin, MessageSquare, MoreVertical, Phone, User, Video, Flag, ShieldOff } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export default function ProfileDetailPage({ params }: { params: { id: string } }) {
   const profile = allProfiles.find((p) => p.id === params.id);
@@ -80,6 +86,17 @@ export default function ProfileDetailPage({ params }: { params: { id: string } }
                     <div className="flex gap-2">
                          <Button><MessageSquare className="mr-2 h-4 w-4" /> Connect</Button>
                          <Button variant="outline" size="icon"><Heart/></Button>
+                         <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon">
+                                    <MoreVertical className="h-5 w-5" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem><Flag className="mr-2 h-4 w-4"/> Report Profile</DropdownMenuItem>
+                                <DropdownMenuItem><ShieldOff className="mr-2 h-4 w-4"/> Block User</DropdownMenuItem>
+                            </DropdownMenuContent>
+                         </DropdownMenu>
                     </div>
                 </div>
             </CardHeader>

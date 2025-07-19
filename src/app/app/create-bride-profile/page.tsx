@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { allProfiles } from '@/lib/mock-data.tsx';
-import { Camera, Save, Upload, Video } from 'lucide-react';
+import { Camera, Save, Upload, Video, Shield } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
@@ -21,6 +21,7 @@ import Image from 'next/image';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Switch } from '@/components/ui/switch';
 
 const user = allProfiles[0];
 
@@ -46,6 +47,8 @@ const profileFormSchema = z.object({
   interests: z.string().optional(),
   profileDetails: z.string().optional(),
   preferences: z.string().optional(),
+  hidePhotos: z.boolean().default(false),
+  limitVisibility: z.boolean().default(false),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -66,107 +69,18 @@ const defaultValues: Partial<ProfileFormValues> = {
   interests: user.interests.join(', '),
   profileDetails: user.profileDetails,
   preferences: user.preferences,
+  hidePhotos: false,
+  limitVisibility: false,
 };
 
 const educationLevels = [
-  {
-    "category": "School Education",
-    "items": [
-        "10th Class",
-        "12th Class"
-    ]
-  },
-  {
-    "category": "After 10th",
-    "items": [
-      "Diploma in Engineering (Polytechnic)",
-      "Diploma in Pharmacy (D.Pharm)",
-      "Diploma in Computer Applications (DCA)",
-      "Diploma in Fashion Designing",
-      "Diploma in Hotel Management",
-      "Diploma in Agriculture",
-      "Diploma in Web Designing",
-      "Diploma in Photography",
-      "Industrial Training Institute (ITI) Courses"
-    ]
-  },
-  {
-    "category": "Bachelor's Degrees (After 12th)",
-    "items": [
-      "B.A. (Bachelor of Arts)",
-      "B.Sc. (Bachelor of Science)",
-      "B.Com. (Bachelor of Commerce)",
-      "BBA (Bachelor of Business Administration)",
-      "BCA (Bachelor of Computer Applications)",
-      "BSW (Bachelor of Social Work)",
-      "BMS (Bachelor of Management Studies)",
-      "BFA (Bachelor of Fine Arts)",
-      "BHM (Bachelor of Hotel Management)",
-      "B.E. / B.Tech (Engineering)",
-      "MBBS (Medicine)",
-      "BDS (Dental Surgery)",
-      "BAMS (Ayurveda)",
-      "BHMS (Homeopathy)",
-      "B.Pharm (Pharmacy)",
-      "B.Arch (Architecture)",
-      "LLB (Bachelor of Law – 5-year integrated course)",
-      "B.Ed (Bachelor of Education – after graduation)"
-    ]
-  },
-  {
-    "category": "Postgraduate Degrees (After Bachelor's)",
-    "items": [
-      "M.A. (Master of Arts)",
-      "M.Sc. (Master of Science)",
-      "M.Com. (Master of Commerce)",
-      "MBA (Master of Business Administration)",
-      "MCA (Master of Computer Applications)",
-      "M.Tech / M.E. (Engineering)",
-      "M.Ed. (Education)",
-      "MSW (Master of Social Work)",
-      "LL.M (Master of Law)",
-      "M.Pharm (Pharmacy)",
-      "M.Arch (Architecture)",
-      "M.Des (Design)"
-    ]
-  },
-  {
-    "category": "Doctoral Degrees (After PG)",
-    "items": [
-      "Ph.D. (Doctor of Philosophy)",
-      "M.Phil. (Master of Philosophy)",
-      "D.Litt. (Doctor of Literature)",
-      "D.Sc. (Doctor of Science)",
-      "MD/MS (Postgraduate Medicine)",
-      "DM/M.Ch (Super-Speciality in Medicine)"
-    ]
-  },
-  {
-    "category": "Vocational & Certificate Courses",
-    "items": [
-      "Computer Basics / Tally / Excel",
-      "Foreign Language Courses",
-      "Spoken English",
-      "Graphic Design",
-      "Digital Marketing",
-      "Animation & Multimedia",
-      "Mobile Repairing",
-      "Beauty & Wellness",
-      "Fashion Designing (Short Term)"
-    ]
-  },
-  {
-    "category": "Distance & Online Education",
-    "items": [
-      "IGNOU (Indira Gandhi National Open University)",
-      "Swayam (GOI e-learning platform)",
-      "State Open Universities",
-      "Online MBA",
-      "Online BBA",
-      "Online MCA",
-      "Certificate MOOCs (Coursera, edX, etc.)"
-    ]
-  }
+  { "category": "School Education", "items": ["10th Class", "12th Class"] },
+  { "category": "After 10th", "items": ["Diploma in Engineering (Polytechnic)", "Diploma in Pharmacy (D.Pharm)", "Diploma in Computer Applications (DCA)", "Diploma in Fashion Designing", "Diploma in Hotel Management", "Diploma in Agriculture", "Diploma in Web Designing", "Diploma in Photography", "Industrial Training Institute (ITI) Courses"] },
+  { "category": "Bachelor's Degrees (After 12th)", "items": ["B.A. (Bachelor of Arts)", "B.Sc. (Bachelor of Science)", "B.Com. (Bachelor of Commerce)", "BBA (Bachelor of Business Administration)", "BCA (Bachelor of Computer Applications)", "BSW (Bachelor of Social Work)", "BMS (Bachelor of Management Studies)", "BFA (Bachelor of Fine Arts)", "BHM (Bachelor of Hotel Management)", "B.E. / B.Tech (Engineering)", "MBBS (Medicine)", "BDS (Dental Surgery)", "BAMS (Ayurveda)", "BHMS (Homeopathy)", "B.Pharm (Pharmacy)", "B.Arch (Architecture)", "LLB (Bachelor of Law – 5-year integrated course)", "B.Ed (Bachelor of Education – after graduation)"] },
+  { "category": "Postgraduate Degrees (After Bachelor's)", "items": ["M.A. (Master of Arts)", "M.Sc. (Master of Science)", "M.Com. (Master of Commerce)", "MBA (Master of Business Administration)", "MCA (Master of Computer Applications)", "M.Tech / M.E. (Engineering)", "M.Ed. (Education)", "MSW (Master of Social Work)", "LL.M (Master of Law)", "M.Pharm (Pharmacy)", "M.Arch (Architecture)", "M.Des (Design)"] },
+  { "category": "Doctoral Degrees (After PG)", "items": ["Ph.D. (Doctor of Philosophy)", "M.Phil. (Master of Philosophy)", "D.Litt. (Doctor of Literature)", "D.Sc. (Doctor of Science)", "MD/MS (Postgraduate Medicine)", "DM/M.Ch (Super-Speciality in Medicine)"] },
+  { "category": "Vocational & Certificate Courses", "items": ["Computer Basics / Tally / Excel", "Foreign Language Courses", "Spoken English", "Graphic Design", "Digital Marketing", "Animation & Multimedia", "Mobile Repairing", "Beauty & Wellness", "Fashion Designing (Short Term)"] },
+  { "category": "Distance & Online Education", "items": ["IGNOU (Indira Gandhi National Open University)", "Swayam (GOI e-learning platform)", "State Open Universities", "Online MBA", "Online BBA", "Online MCA", "Certificate MOOCs (Coursera, edX, etc.)"] }
 ];
 
 
@@ -737,6 +651,53 @@ export default function CreateBrideProfilePage() {
                                 />
                             </div>
                         </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold font-headline mb-4 flex items-center gap-2"><Shield /> Privacy Settings</h3>
+                             <div className="space-y-4">
+                                <FormField
+                                    control={form.control}
+                                    name="hidePhotos"
+                                    render={({ field }) => (
+                                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                                            <div className="space-y-0.5">
+                                                <FormLabel className="text-base">Hide Photos</FormLabel>
+                                                <FormDescription>
+                                                    Only show your photos to members you connect with.
+                                                </FormDescription>
+                                            </div>
+                                            <FormControl>
+                                                <Switch
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="limitVisibility"
+                                    render={({ field }) => (
+                                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                                            <div className="space-y-0.5">
+                                                <FormLabel className="text-base">Limit Profile Visibility</FormLabel>
+                                                <FormDescription>
+                                                    Only allow verified members to view your profile.
+                                                </FormDescription>
+                                            </div>
+                                            <FormControl>
+                                                <Switch
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                             </div>
+                        </div>
+
                         <div className="flex justify-end pt-4">
                             <Button type="submit" size="lg"><Save className="mr-2 h-4 w-4"/> Save Profile</Button>
                         </div>
