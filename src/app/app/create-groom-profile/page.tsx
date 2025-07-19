@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { allProfiles } from '@/lib/mock-data.tsx';
 import { Camera, Save, Upload, Video } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -60,34 +60,54 @@ const indianDiplomaCourses = [
 ];
 
 const occupationCategories = [
-    "Accounting & Finance",
-    "Administration & Office Support",
-    "Advertising, Arts & Media",
-    "Banking & Financial Services",
-    "Business Owner / Entrepreneur",
-    "Construction",
-    "Consulting & Strategy",
-    "Design & Architecture",
-    "Education & Training",
-    "Engineering",
-    "Farming, Animals & Conservation",
-    "Government & Defence",
-    "Healthcare & Medical",
-    "Hospitality & Tourism",
-    "Human Resources & Recruitment",
-    "Information & Communication Technology",
-    "Insurance & Superannuation",
-    "Legal",
-    "Manufacturing, Transport & Logistics",
-    "Marketing & Communications",
-    "Real Estate & Property",
-    "Retail & Consumer Products",
-    "Sales",
-    "Science & Technology",
-    "Sports & Recreation",
-    "Trades & Services",
-    "Not Currently Working",
-    "Other"
+    {
+        "category": "Government Jobs",
+        "items": ["IAS", "IPS", "IFS", "Bank PO (SBI, IBPS, RBI)", "School Teacher (Govt)", "College Professor (Govt)", "Defence (Army, Navy, Air Force)", "Police Services", "Railway Jobs", "Public Sector Undertakings (PSUs)", "Judiciary (Judge, Public Prosecutor)"]
+    },
+    {
+        "category": "Private Sector Jobs",
+        "items": ["Software Engineer", "Data Analyst", "Chartered Accountant", "Company Secretary", "HR Manager", "Marketing Executive", "Sales Executive", "Customer Support / BPO", "Legal Associate", "Private School Teacher", "Graphic Designer", "UI/UX Designer", "Architect", "Interior Designer", "Hotel Manager", "Chef"]
+    },
+    {
+        "category": "Freelance & Professional Careers",
+        "items": ["Lawyer / Legal Consultant", "Doctor / Dentist", "Physiotherapist", "Freelance Writer / Blogger", "YouTuber", "Social Media Influencer", "Photographer / Videographer", "Event Planner", "Fitness Trainer", "Yoga Instructor", "Voiceover Artist", "Actor / Actress", "Therapist / Counselor", "Astrologer / Numerologist", "Makeup Artist / Beautician"]
+    },
+    {
+        "category": "Online Businesses",
+        "items": ["E-commerce Seller (Amazon, Flipkart)", "Dropshipping", "Digital Marketing Agency", "SEO Services", "Online Course Creator", "Affiliate Marketing", "App Development", "Stock Market Trader", "Crypto Trader", "Blogger (AdSense Revenue)"]
+    },
+    {
+        "category": "Offline Businesses",
+        "items": ["Retail Store Owner", "Grocery Store", "Clothing Shop", "Restaurant / Cafe", "Food Truck", "Salon / Spa", "Tuition / Coaching Center", "Courier / Delivery Franchise", "Printing / Xerox Shop", "Travel Agency", "Real Estate Broker", "Gym / Fitness Studio", "Bookstore / Stationery Shop", "Pet Shop / Pet Breeding"]
+    },
+    {
+        "category": "Skilled Trades & Labour",
+        "items": ["Electrician", "Plumber", "Auto Mechanic", "Tailor", "Carpenter", "Mason", "Driver (Cab, Auto)", "Cook / Caterer", "Housekeeping", "Security Guard", "Delivery Boy (Zomato, Swiggy, Amazon)"]
+    },
+    {
+        "category": "Home-Based & Remote Work",
+        "items": ["Data Entry Operator", "Online Tutor", "Virtual Assistant", "Online Survey Taker", "Transcriptionist", "Voiceover Freelancer", "Proofreader", "Remote Tech Support", "Online Reseller (Meesho, GlowRoad)"]
+    },
+    {
+        "category": "Creative & Artistic Careers",
+        "items": ["Fashion Designer", "Handicraft Maker", "Calligraphy Artist", "Jewelry Designer", "Pottery Artist", "Musician", "Singer / DJ", "Dance Instructor"]
+    },
+    {
+        "category": "Agriculture & Rural Work",
+        "items": ["Farmer (Crop Farming)", "Organic Farming", "Poultry Farming", "Goat / Sheep Farming", "Beekeeping", "Fish Farming", "Dairy Business", "Rural Handicrafts", "Agri-Tech Startups"]
+    },
+    {
+        "category": "Modern / Emerging Fields",
+        "items": ["AI Engineer", "Machine Learning Specialist", "Cybersecurity Analyst", "Blockchain Developer", "UI/UX Designer", "Ethical Hacker", "Game Streamer", "Drone Operator", "EdTech Entrepreneur", "HealthTech Founder"]
+    },
+    {
+        "category": "Religious / Spiritual Services",
+        "items": ["Purohit / Pandit", "Priest", "Vastu Consultant", "Motivational Speaker", "Spiritual Guru", "Reiki Healer", "Meditation Teacher", "Yoga Guru"]
+    },
+    {
+        "category": "Miscellaneous Income Sources",
+        "items": ["Rental Income (Property)", "Book Royalties", "Music Royalties", "Pension / Annuity", "Cashback / Rewards", "MLM / Network Marketing (Caution Advised)", "Affiliate Commissions"]
+    }
 ];
 
 const heightOptions = () => {
@@ -272,8 +292,15 @@ export default function CreateGroomProfilePage() {
                                 <SelectTrigger id="occupation">
                                     <SelectValue placeholder="Select occupation"/>
                                 </SelectTrigger>
-                                <SelectContent className="max-h-60">
-                                    {occupationCategories.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
+                                <SelectContent className="max-h-80">
+                                    {occupationCategories.map(group => (
+                                        <SelectGroup key={group.category}>
+                                            <SelectLabel>{group.category}</SelectLabel>
+                                            {group.items.map(item => (
+                                                <SelectItem key={item} value={item}>{item}</SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    ))}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -305,3 +332,5 @@ export default function CreateGroomProfilePage() {
     </div>
   );
 }
+
+    
