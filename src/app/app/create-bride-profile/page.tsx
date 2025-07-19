@@ -8,7 +8,6 @@ import { z } from 'zod';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { allProfiles } from '@/lib/mock-data.tsx';
@@ -30,7 +29,7 @@ const profileFormSchema = z.object({
   dob: z.date({
     required_error: "Date of birth is required.",
   }),
-  religion: z.string().optional(),
+  religion: z.string().min(1, { message: "Religion is required." }),
   maritalStatus: z.string().min(1, { message: "Marital status is required." }),
   height: z.string().min(1, { message: "Height is required." }),
   weight: z.string().optional(),
@@ -607,7 +606,7 @@ export default function CreateBrideProfilePage() {
 
                          <div>
                              <h3 className="text-lg font-semibold font-headline mb-4">Lifestyle & Family</h3>
-                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                             <div className="space-y-6">
                                 <FormField
                                   control={form.control}
                                   name="smoking"
@@ -750,3 +749,5 @@ export default function CreateBrideProfilePage() {
     </div>
   );
 }
+
+    
