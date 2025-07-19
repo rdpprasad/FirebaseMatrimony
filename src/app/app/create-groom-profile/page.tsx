@@ -520,7 +520,7 @@ export default function CreateGroomProfilePage() {
 
                         <div>
                             <h3 className="text-lg font-semibold font-headline mb-4">Lifestyle & Family</h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div className="space-y-6">
                                 <FormField
                                   control={form.control}
                                   name="diet"
