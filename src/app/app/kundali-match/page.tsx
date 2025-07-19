@@ -70,12 +70,12 @@ function BirthDetailsForm({ title, details, setDetails, gender }: { title: strin
                     </div>
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor={`${gender}-pob`}>Place of Birth</pob>`</Label>
+                    <Label htmlFor={`${gender}-pob`}>Place of Birth</Label>
                     <Input id={`${gender}-pob`} placeholder="e.g. Mumbai, India" value={details.pob} onChange={(e) => setDetails({ ...details, pob: e.target.value })} />
                 </div>
             </CardContent>
         </Card>
-    )
+    );
 }
 
 function LoadingSkeleton() {
@@ -248,4 +248,3 @@ export default function KundaliMatchPage() {
         </div>
     );
 }
-
