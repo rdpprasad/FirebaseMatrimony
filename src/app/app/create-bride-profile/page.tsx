@@ -227,7 +227,7 @@ const bodyTypeOptions = ["Slim", "Athletic", "Average", "Heavy", "Prefer not to 
 const incomeOptions = ["Below ₹1 LPA", "₹1-2 LPA", "₹2-4 LPA", "₹4-7 LPA", "₹7-10 LPA", "₹10-15 LPA", "₹15-20 LPA", "₹20-30 LPA", "₹30-50 LPA", "₹50-75 LPA", "₹75 LPA - 1 Crore", "₹1 Crore+", "Prefer not to say"];
 const smokingOptions = ["No", "Yes", "Occasionally"];
 const drinkingOptions = ["No", "Yes", "Occasionally"];
-const dietOptions = ["Vegetarian", "Non-Vegetarian", "Eggetarian", "Jain", "Vegan"];
+const dietOptions = ["Vegetarian", "Eggetarian", "Occasionally Non-Veg", "Non-Vegetarian", "Jain", "Vegan"];
 
 
 const heightOptions = () => {
@@ -604,9 +604,27 @@ export default function CreateBrideProfilePage() {
                             </div>
                         </div>
 
-                         <div>
-                             <h3 className="text-lg font-semibold font-headline mb-4">Lifestyle & Family</h3>
-                             <div className="space-y-6">
+                        <div>
+                            <h3 className="text-lg font-semibold font-headline mb-4">Lifestyle & Family</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <FormField
+                                  control={form.control}
+                                  name="diet"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Diet</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                                <SelectTrigger><SelectValue placeholder="Select diet" /></SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {dietOptions.map(diet => <SelectItem key={diet} value={diet}>{diet}</SelectItem>)}
+                                            </SelectContent>
+                                        </Select>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
                                 <FormField
                                   control={form.control}
                                   name="smoking"
@@ -659,24 +677,6 @@ export default function CreateBrideProfilePage() {
                                     </FormItem>
                                   )}
                                 />
-                                <FormField
-                                  control={form.control}
-                                  name="diet"
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormLabel>Diet</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                                <SelectTrigger><SelectValue placeholder="Select diet" /></SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {dietOptions.map(diet => <SelectItem key={diet} value={diet}>{diet}</SelectItem>)}
-                                            </SelectContent>
-                                        </Select>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
                             </div>
                             <FormField
                                 control={form.control}
@@ -692,7 +692,7 @@ export default function CreateBrideProfilePage() {
                                 )}
                             />
                         </div>
-                        
+
                         <div>
                             <h3 className="text-lg font-semibold font-headline mb-4">About & Preferences</h3>
                             <div className="space-y-6">
@@ -749,5 +749,3 @@ export default function CreateBrideProfilePage() {
     </div>
   );
 }
-
-    
