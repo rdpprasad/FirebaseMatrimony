@@ -18,7 +18,7 @@ const BirthDetailsSchema = z.object({
   placeOfBirth: z.string().describe('The city and country of birth (e.g., "Mumbai, India").'),
 });
 
-export const KundaliMatchInputSchema = z.object({
+const KundaliMatchInputSchema = z.object({
   brideDetails: BirthDetailsSchema.describe("The bride's birth details."),
   groomDetails: BirthDetailsSchema.describe("The groom's birth details."),
 });
@@ -44,7 +44,7 @@ const ManglikReportSchema = z.object({
     conclusion: z.string().describe("A conclusion about Manglik dosha compatibility, including whether any dosha cancels out."),
 });
 
-export const KundaliMatchOutputSchema = z.object({
+const KundaliMatchOutputSchema = z.object({
   brideName: z.string(),
   groomName: z.string(),
   gunMilan: GunMilanSchema,
