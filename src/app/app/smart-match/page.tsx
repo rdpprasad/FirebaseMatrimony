@@ -8,7 +8,7 @@ import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Gem, Bot, Sparkles, AlertCircle } from 'lucide-react';
 import { smartMatch, SmartMatchOutput } from '@/ai/flows/smart-match';
-import { mainUserProfile, candidateProfiles } from '@/lib/mock-data.tsx';
+import { mainUserProfile, candidateProfiles } from '@/lib/mock-data';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function SmartMatchPage() {

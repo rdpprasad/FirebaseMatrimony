@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { allProfiles } from '@/lib/mock-data.tsx';
+import { mockProfiles } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ArrowLeft, Briefcase, Calendar, CheckCircle, GraduationCap, Heart, Locate, MapPin, MessageSquare, MoreVertical, Phone, User, Video, Flag, ShieldOff } from 'lucide-react';
 import Image from 'next/image';
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 export default function ProfileDetailPage({ params }: { params: { id: string } }) {
-  const profile = allProfiles.find((p) => p.id === params.id);
+  const profile = mockProfiles.find((p) => p.id === Number(params.id));
 
   if (!profile) {
     return <div className="text-center">Profile not found.</div>;

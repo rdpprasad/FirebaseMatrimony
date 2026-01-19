@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { allProfiles } from '@/lib/mock-data.tsx';
+import { mockProfiles } from '@/lib/mock-data';
 import { Camera, Save, Upload, Video } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
@@ -23,7 +23,7 @@ import { useToast } from '@/hooks/use-toast';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 
-const user = allProfiles[0];
+const user = mockProfiles[0];
 
 const profileFormSchema = z.object({
   name: z.string().min(1, { message: "Full Name is required." }),

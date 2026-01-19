@@ -1,7 +1,6 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -17,6 +16,13 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+  },
+  webpack: (config, { dev, isServer }) => {
+    // Enable Fast Refresh in development
+    if (dev && !isServer) {
+      config.optimization.moduleIds = 'named';
+    }
+    return config;
   },
 };
 

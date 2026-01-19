@@ -4,7 +4,23 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Heart, Users, Search, MessageSquare, Gem, CheckCircle, Edit, Globe, RefreshCw, SmilePlus } from 'lucide-react';
-import { successStories } from '@/lib/mock-data.tsx';
+import { successStories } from '@/lib/mock-data';
+
+interface SuccessStory {
+  id: number;
+  name: string;
+  location: string;
+  story: string;
+  avatar: string;
+}
+
+interface SuccessStory {
+  id: number;
+  name: string;
+  location: string;
+  story: string;
+  avatar: string;
+}
 import { Logo } from '@/components/logo';
 
 const howItWorks = [
@@ -218,7 +234,7 @@ export default function Home() {
               <p className="mt-4 text-lg text-muted-foreground">Don't just take our word for it. Read stories from couples who found their forever love with us.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {successStories.slice(0, 3).map((story) => (
+              {successStories.slice(0, 3).map((story: SuccessStory) => (
                 <Card key={story.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <CardContent className="p-6">
                     <div className="flex items-center space-x-4 mb-4">
@@ -247,5 +263,4 @@ export default function Home() {
       <LandingFooter />
     </div>
   );
-
-    
+}

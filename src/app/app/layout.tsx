@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import {
   SidebarProvider,
   Sidebar,
@@ -43,6 +44,11 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <SidebarProvider>
@@ -86,11 +92,9 @@ export default function AppLayout({
                     </SidebarMenuItem>
                 ))}
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Logout">
-                  <Link href="/">
-                    <LogOut />
-                    <span>Logout</span>
-                  </Link>
+                <SidebarMenuButton tooltip="Logout" onClick={handleLogout}>
+                  <LogOut />
+                  <span>Logout</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

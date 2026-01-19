@@ -6,13 +6,13 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { allProfiles } from '@/lib/mock-data.tsx';
+import { mockProfiles } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 import { SendHorizonal, Smile, Phone, Video } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default function MessagesPage() {
-  const [selectedUser, setSelectedUser] = useState(allProfiles[1]);
+  const [selectedUser, setSelectedUser] = useState(mockProfiles[1]);
 
   const messages = [
     { from: 'other', text: "Hey! I saw your profile and was really impressed. Your love for hiking caught my eye." },
@@ -32,7 +32,7 @@ export default function MessagesPage() {
           <ScrollArea className="h-[calc(100%-8rem)]">
             <CardContent className="p-2">
               <div className="space-y-1">
-                {allProfiles.slice(1).map((user) => (
+                {mockProfiles.slice(1).map((user) => (
                   <button
                     key={user.id}
                     onClick={() => setSelectedUser(user)}

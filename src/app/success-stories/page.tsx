@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { successStories } from '@/lib/mock-data.tsx';
+import { successStories } from '@/lib/mock-data';
 import { Logo } from '@/components/logo';
 
 function SuccessHeader() {

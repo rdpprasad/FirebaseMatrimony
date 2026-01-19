@@ -9,11 +9,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
-import { allProfiles } from '@/lib/mock-data.tsx';
+import { mockProfiles, type Profile } from '@/lib/mock-data';
 import { CheckCircle, MessageSquare, User, SearchIcon } from 'lucide-react';
 import Link from 'next/link';
 
-function ProfileCard({ profile }: { profile: (typeof allProfiles)[0] }) {
+function ProfileCard({ profile }: { profile: Profile }) {
   return (
     <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
       <CardHeader className="p-0">
@@ -46,8 +46,8 @@ function ProfileCard({ profile }: { profile: (typeof allProfiles)[0] }) {
   );
 }
 
-const allInterests = [...new Set(allProfiles.flatMap(p => p.interests))];
-const allEducations = [...new Set(allProfiles.map(p => p.education))];
+const allInterests = [...new Set(mockProfiles.flatMap(p => p.interests))];
+const allEducations = [...new Set(mockProfiles.map(p => p.education))];
 
 export default function SearchPage() {
   const [ageRange, setAgeRange] = useState([25, 35]);
@@ -107,7 +107,7 @@ export default function SearchPage() {
       <main className="lg:col-span-3">
         <h1 className="text-3xl font-headline font-bold tracking-tight mb-6">Search Results</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-          {allProfiles.slice(1).map((profile) => (
+          {mockProfiles.slice(1).map((profile) => (
             <ProfileCard key={profile.id} profile={profile} />
           ))}
         </div>
